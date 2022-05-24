@@ -18,6 +18,12 @@ def createProfileDict():
     for profileID in profileData["profiles"]:
             profileDict[profileID['cute_name']]=profileID['profile_id']
 
+def findSpecificProfile(obj):
+    specificProfileLink = f"https://api.hypixel.net/skyblock/profiles?key={apiKey}&uuid={profileDict[obj]}"
+    print(specificProfileLink)
+    specificProfileInformation = getInfo(specificProfileLink)
+    pprint(specificProfileInformation)
+
 #Default parameters
 name="Seyr"
 apiKey="31e6d0f4-ff94-4e27-a297-3c376e535ec0"
@@ -56,28 +62,31 @@ elif response == "2":
     print(profileDict)
     specifiedProfile = input("Which profile would you like the information for?\n")
     if specifiedProfile in profileDict:
-        specificProfileLink = f"https://api.hypixel.net/skyblock/profiles?key={apiKey}&uuid={profileDict[specifiedProfile]}"
-        print(specificProfileLink)
-        specificProfileInformation = getInfo(specificProfileLink)
-        pprint(specificProfileInformation)
+        # specificProfileLink = f"https://api.hypixel.net/skyblock/profiles?key={apiKey}&uuid={profileDict[specifiedProfile]}"
+        # print(specificProfileLink)
+        # specificProfileInformation = getInfo(specificProfileLink)
+        # pprint(specificProfileInformation)
+        findSpecificProfile(specifiedProfile)
     else:
         print("Profile does not exist")
+        quit()
 else:
     print("Invalid Input")
+    quit()
+    
+##Writes full profile data into a json file (Outdated)
+with open("listProfiles.json", "w") as outfile:
+    profileData = getInfo(skyblockListProfilesLink)
+    profileDataSerialised = json.dumps(profileData, indent=4)
+    outfile.write(profileDataSerialised)
 
-##Writes full profile data into a json file
-# with open("listProfiles.json", "w") as outfile:
-#     profileData = getInfo(skyblockListProfilesLink)
-#     profileDataSerialised = json.dumps(profileData, indent=4)
-#     outfile.write(profileDataSerialised)
-
-##Creates dictionary which contains the Skyblock UUID and Nickname
-# profileDict = {}
-# with open("listProfiles.json") as json_file:
-#     fullProfileData = json.load(json_file)
-#     # pprint(fullProfileData['profiles'])
-#     for profileID in fullProfileData["profiles"]:
-#         # print(profileID['profile_id'])
-#         # print(profileID['cute_name'])
-#         profileDict[profileID['cute_name']]=profileID['profile_id']
+##Creates dictionary which contains the Skyblock UUID and Nickname (Outdated)
+profileDict = {}
+with open("listProfiles.json") as json_file:
+    fullProfileData = json.load(json_file)
+    # pprint(fullProfileData['profiles'])
+    for profileID in fullProfileData["profiles"]:
+        # print(profileID['profile_id'])
+        # print(profileID['cute_name'])
+        profileDict[profileID['cute_name']]=profileID['profile_id']
         
