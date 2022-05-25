@@ -1,5 +1,6 @@
 from itertools import count
 import random
+import pandas as pd
 
 def listAllSeriesTypes():
     for seriesPresent in animeList:
@@ -21,6 +22,44 @@ animeList = [
  ["AMOGUS","AMOGUS","AMOGUS"],
  ["SAMPLE TEXT","SAMPLE TEXT","SAMPLE TEXT"]
  ]
+
+animeListPanda = pd.DataFrame({
+     "Anime Name":[
+         "Bakemonogatari",
+         "Naruto",
+         "Bleach",
+         "Mushoku Tensei",
+         "Mato Seihei no Slave",
+         "Sono Bisque Doll wa Koi wo Suru",
+         "Kizumonogatari I",
+         "AMOGUS",
+         "SAMPLE TEXT"
+     ],
+     "Genre":[
+         "Vampire",
+         "Shounen",
+         "Shounen",
+         "Isekai",
+         "Shounen",
+         "Seinen",
+         "Vampire",
+         "AMOGUS",
+         "SAMPLE TEXT"
+     ],
+     "Type":[
+         "TV",
+         "TV",
+         "TV",
+         "TV",
+         "TV",
+         "TV",
+         "Movie",
+         "AMOGUS",
+         "SAMPLE TEXT"
+     ],
+ }
+ )
+print(animeListPanda)
 
 ##Method to count total number of items within nested lists
 # count = 0
@@ -57,7 +96,7 @@ for i in range(len(seriesTypes)):
     print(seriesTypes[i])
 
 animeType = input("What kind of Anime do you want to watch?\n")
-movieOrTV = input("Do you want to watch a TV show or Movie?")
+movieOrTV = input("Do you want to walk a TV show or Movie?")
 
 testInteger=0
 filteredList = []
@@ -69,11 +108,7 @@ for types in animeList:
 
 if len(filteredList) > 0:
     rngChoice = random.choice(filteredList)
-    # print("Recommendation\n Anime: " + rngChoice[0] + "\n Genre: " + rngChoice[1] + "\n Type: " + rngChoice[2])
-    print(f"""Recommendation
-    Anime: {rngChoice[0]}
-    Genre: {rngChoice[1]}
-    Type: {rngChoice[2]}""")
+    print("Recommendation\n Anime: " + rngChoice[0] + "\n Genre: " + rngChoice[1] + "\n Type: " + rngChoice[2])
 else:
     print("No such series exists within the database")
 
