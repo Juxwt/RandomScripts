@@ -1,8 +1,4 @@
 # import webbrowser
-from cgi import test
-from re import L
-from tkinter import N
-import uu
 import requests
 import json
 from pprint import pprint
