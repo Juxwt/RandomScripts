@@ -57,60 +57,53 @@ animeListPanda = pd.DataFrame({
          "AMOGUS",
          "SAMPLE TEXT"
      ],
+     "Rating":[
+         "1",
+         "2",
+         "3",
+         "4",
+         "5",
+         "6",
+         "7",
+         "8",
+         "9",
+     ],
  }
  )
 print(animeListPanda)
-
-##Method to count total number of items within nested lists
-# count = 0
-# for i in animeList:
-#     count += len(i)
-# print(count)
-# print(animeList[0][0])
-
-# # Python code to sort the tuples using second element 
-# # of sublist Inplace way to sort using sort()
-# def sort2ndVariable(sub_li):
-  
-#     # reverse = None (Sorts in Ascending order)
-#     # key is set to sort using second element of 
-#     # sublist lambda has been used
-#     sub_li.sort(key = lambda x: x[1])
-#     return sub_li
-
-# sort2ndVariable(animeList)
-# print(animeList)
-
-seriesTypes = []
-
-listAllSeriesTypes()
-
-##Sanitises the list and removes duplicate series entries from the list
-seriesTypes = list(dict.fromkeys(seriesTypes))
+print(animeListPanda[["Genre","Anime Name"]])
 
 
+
+all_series = list(dict.fromkeys(animeListPanda["Genre"].values.tolist()))
 
 print("These are the series types:")
 
-for i in range(len(seriesTypes)):
-    print(seriesTypes[i])
+for i in range(len(all_series)):
+    print(all_series[i])
 
-animeType = input("What kind of Anime do you want to watch?\n")
-movieOrTV = input("Do you want to walk a TV show or Movie?")
+user_answers = {}
+
+user_answers["animeType"] = input("What kind of Anime do you want to watch?\n")
+user_answers["seriesType"] = input("Do you want to watch a TV show or Movie?\n")
+
+print(user_answers)
+print(animeListPanda["Genre"][0])
+print(user_answers["animeType"])
 
 testInteger=0
 filteredList = []
-for types in animeList:
-    if animeType.casefold() == animeList[testInteger][1].casefold():
-        filteredList.append(animeList[testInteger])
-        print(filteredList)
-    testInteger += 1
+# for types in animeListPanda["Anime Name"]:
+#     if user_answers["animeType"] == animeListPanda["Genre"]:
+#         filteredList.append(animeList[testInteger])
+#         print(filteredList)
+#     testInteger += 1
 
-if len(filteredList) > 0:
-    rngChoice = random.choice(filteredList)
-    print("Recommendation\n Anime: " + rngChoice[0] + "\n Genre: " + rngChoice[1] + "\n Type: " + rngChoice[2])
-else:
-    print("No such series exists within the database")
+# if len(filteredList) > 0:
+#     rngChoice = random.choice(filteredList)
+#     print("Recommendation\n Anime: " + rngChoice[0] + "\n Genre: " + rngChoice[1] + "\n Type: " + rngChoice[2])
+# else:
+#     print("No such series exists within the database")
 
 ##An attempt at replicating print(random.choice(animeList)[0])
 # testList = []
