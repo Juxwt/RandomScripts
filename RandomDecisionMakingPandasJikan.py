@@ -40,10 +40,13 @@ genreData = getGenre()
 genreList = genreData.getGenreList()
 genreList = pd.DataFrame(genreList)
 
+filteredGenreList = genreList["name"] == "Erotica"
+filteredGenreList = genreList[filteredGenreList]
+print(filteredGenreList)
 # ['data']
 pp(genreList)
-pp(type(genreList))
-    
+# pp(type(genreList))
+
 
 class animeSearch():
     
