@@ -2,27 +2,7 @@ from itertools import count
 import random
 import pandas as pd
 
-def listAllSeriesTypes():
-    for seriesPresent in animeList:
-        seriesTypes.append(seriesPresent[1])
-        # print(seriesTypes)
-        # print(len(seriesTypes))
-        if len(seriesTypes) == 0:    
-            print("Database is empty")
-
-
-animeList = [
-["Bakemonogatari","Vampire","TV"],
- ["Naruto", "Shounen", "TV"],
- ["Bleach", "Shounen", "TV"],
- ["Mushoku Tensei", "Isekai", "TV"], 
- ["Mato Seihei no Slave", "Shounen", "TV"],
- ["Sono Bisque Doll wa Koi wo Suru", "Seinen", "TV"],
- ["Kizumonogatari I","Vampire","Movie"],
- ["AMOGUS","AMOGUS","AMOGUS"],
- ["SAMPLE TEXT","SAMPLE TEXT","SAMPLE TEXT"]
- ]
-
+#?Creates dataframe that contians dataset information
 animeListPanda = pd.DataFrame({
      "Anime Name":[
          "Bakemonogatari",
@@ -32,6 +12,7 @@ animeListPanda = pd.DataFrame({
          "Mato Seihei no Slave",
          "Sono Bisque Doll wa Koi wo Suru",
          "Kizumonogatari I",
+         "Kizumonogatari II",
          "AMOGUS",
          "SAMPLE TEXT"
      ],
@@ -42,6 +23,7 @@ animeListPanda = pd.DataFrame({
          "Isekai",
          "Shounen",
          "Seinen",
+         "Vampire",
          "Vampire",
          "AMOGUS",
          "SAMPLE TEXT"
@@ -54,6 +36,7 @@ animeListPanda = pd.DataFrame({
          "TV",
          "TV",
          "Movie",
+         "Movie",
          "AMOGUS",
          "SAMPLE TEXT"
      ],
@@ -65,6 +48,7 @@ animeListPanda = pd.DataFrame({
          "5",
          "6",
          "7",
+         "7",
          "8",
          "9",
      ],
@@ -74,50 +58,43 @@ print(animeListPanda)
 print(animeListPanda[["Genre","Anime Name"]])
 
 
-
-all_series = list(dict.fromkeys(animeListPanda["Genre"].values.tolist()))
+#?Puts all genres into a list and removes duplicate genres
+all_genre = list(dict.fromkeys(animeListPanda["Genre"].values.tolist()))
 
 print("These are the series types:")
 
-for i in range(len(all_series)):
-    print(all_series[i])
+for i in range(len(all_genre)):
+    #?Displays all genres line by line
+    print(all_genre[i])
 
 user_answers = {}
 
+#?Accepts user input to be used for filtering
 user_answers["animeType"] = input("What kind of Anime do you want to watch?\n")
 user_answers["seriesType"] = input("Do you want to watch a TV show or Movie?\n")
 
 print(user_answers)
-print(animeListPanda["Genre"][0])
-print(user_answers["animeType"])
 
-testInteger=0
-filteredList = []
-# for types in animeListPanda["Anime Name"]:
-#     if user_answers["animeType"] == animeListPanda["Genre"]:
-#         filteredList.append(animeList[testInteger])
-#         print(filteredList)
-#     testInteger += 1
+#! Filter the dataframe based on provided input
+filteredAnimeList = animeListPanda["Genre"] == user_answers["animeType"] 
+filteredAnimeList = animeListPanda[filteredAnimeList]
+filteredAnimeListType = filteredAnimeList["Type"] == user_answers["seriesType"] 
+filteredAnimeList = filteredAnimeList[filteredAnimeListType]
 
-# if len(filteredList) > 0:
-#     rngChoice = random.choice(filteredList)
-#     print("Recommendation\n Anime: " + rngChoice[0] + "\n Genre: " + rngChoice[1] + "\n Type: " + rngChoice[2])
-# else:
-#     print("No such series exists within the database")
+# print(filteredAnimeList)
+# print(filteredAnimeList.iloc[0].values[0])
 
-##An attempt at replicating print(random.choice(animeList)[0])
-# testList = []
-# what = 0
-# for x in animeList:
-#     testList.append(animeList[what][0])
-#     what +=1
-# print(testList)
-
-##Chooses a single random item from the list
-# print(random.choice(animeList)[0])
-
-##Chooses multiple choices from the provided list regardless of repeating
-# print(random.choices(animeList, k=3))
-
-##Chooses multiple choices and ensures that no option is picked more than once
-# print(random.sample(animeList, k=3))
+if len(filteredAnimeList) > 0:
+    rngPick = filteredAnimeList.sample()
+    rngPick = rngPick.values.tolist()
+    # print(rngPick)
+    # print(f"""Recommendation Anime:{rngPick.to_string(index=False)} """)
+    print(f"""
+    Recommendation
+    Anime: {rngPick[0][0]}
+    Rating: {rngPick[0][3]}
+    Genre: {rngPick[0][1]}
+    Type: {rngPick[0][2]}
+    """)
+else:
+    print(""" Unable to recommend a series.\n Either one does not exist or the database does not contain one.""")
