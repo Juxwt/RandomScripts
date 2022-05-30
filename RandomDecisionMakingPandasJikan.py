@@ -1,15 +1,11 @@
 from cgi import test
-from operator import ge
-from tracemalloc import stop
 import requests
 import json
 import pandas as pd
+from pandas import json_normalize
 from pprint import pprint as pp
 
 baseUrl = "https://api.jikan.moe/v4"
-# print(getAnimeById)
-getAnimeSearch = f"https://api.jikan.moe/v4/anime"
-getAnimeGenres = f"https://api.jikan.moe/v4/genres/anime"
 
 def convertToPandas(arg):
         genreListDataframe = pd.DataFrame.from_dict(arg)
@@ -36,7 +32,9 @@ class getGenre():
         return self.genreList['data']
     
 #! Fixed supposed to be GET instead of POST lol
-#? Returns data into a list now have to turn it into pandas dataframe?
+#* Returns data as a dataframe
+#? TODO increase amount of search parameters (Loops?)
+
 class animeSearch():
     
     def __init__(self):
@@ -49,8 +47,9 @@ class animeSearch():
         # print(url)
         self.data = requests.get(url=url, params=params)
         animeSearchJson = json.loads(self.data.text)
+        animeSearchPandas = json_normalize(animeSearchJson['data'])
         # pp(self.data.text)
-        return animeSearchJson['data']
+        return animeSearchPandas
 
         
 #? Puts genre data into dataframe
@@ -72,7 +71,9 @@ pp(genreListDictionary)
 # # pp(type(genreList))
 # pp(genreList[["mal_id","name"]])
 
-genreWanted = input("WHAT YOU WANT\n")
+#* Gets genre wanted and filters information returning a dataframe containing searched information
+#? Returns only 25 values could be limitation of API or could be a query paramter to show more anime
+genreWanted = input("Genre?\n")
 filterFunction = animeSearch()
 output = filterFunction.searchFunction(genreWanted)
 pp(output)
