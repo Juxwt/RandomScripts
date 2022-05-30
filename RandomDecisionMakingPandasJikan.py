@@ -35,7 +35,8 @@ class getGenre():
         # pp(self.genreList)
         return self.genreList['data']
     
-#! Fix request params to work for querying data
+#! Fixed supposed to be GET instead of POST lol
+#? Returns data into a list now have to turn it into pandas dataframe?
 class animeSearch():
     
     def __init__(self):
@@ -43,13 +44,13 @@ class animeSearch():
 
     def searchFunction(self,genre):
         url = baseUrl + "/anime"
-        value = genreListDictionary[genre]
         params = {"genres": genreListDictionary[genre]}
-        print(params)
-        print(url)
-        self.data = requests.post(url=url, params=params)
-        print(self.data.text)
-        return self.data
+        # print(params)
+        # print(url)
+        self.data = requests.get(url=url, params=params)
+        animeSearchJson = json.loads(self.data.text)
+        # pp(self.data.text)
+        return animeSearchJson['data']
 
         
 #? Puts genre data into dataframe
