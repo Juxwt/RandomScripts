@@ -1,4 +1,5 @@
 from cgi import test
+from operator import ge
 import requests
 import json
 import pandas as pd
@@ -35,17 +36,23 @@ class getGenre():
     
     
         
-
+#? Puts genre data into dataframe
 genreData = getGenre()
 genreList = genreData.getGenreList()
 genreList = pd.DataFrame(genreList)
+# genreList = genreList.drop("count",1)
+# pp(genreList)
+#? Sorts genre data into a dictionary removing duplicates
+genreListDictionary = genreList.set_index('name')['mal_id'].to_dict()
+pp(genreListDictionary)
 
-filteredGenreList = genreList["name"] == "Shounen"
-filteredGenreList = genreList[filteredGenreList]
-print(filteredGenreList)
-# ['data']
-pp(genreList)
-# pp(type(genreList))
+# filteredGenreList = genreList["name"] == "Shounen"
+# filteredGenreList = genreList[filteredGenreList]
+# print(filteredGenreList)
+# # ['data']
+# pp(genreList)
+# # pp(type(genreList))
+# pp(genreList[["mal_id","name"]])
 
 
 class animeSearch():
