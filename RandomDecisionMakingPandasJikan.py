@@ -1,5 +1,6 @@
 from cgi import test
 from operator import ge
+from tracemalloc import stop
 import requests
 import json
 import pandas as pd
@@ -34,7 +35,22 @@ class getGenre():
         # pp(self.genreList)
         return self.genreList['data']
     
+#! Fix request params to work for querying data
+class animeSearch():
     
+    def __init__(self):
+        self.data = None
+
+    def searchFunction(self,genre):
+        url = baseUrl + "/anime"
+        value = genreListDictionary[genre]
+        params = {"genres": genreListDictionary[genre]}
+        print(params)
+        print(url)
+        self.data = requests.post(url=url, params=params)
+        print(self.data.text)
+        return self.data
+
         
 #? Puts genre data into dataframe
 genreData = getGenre()
@@ -46,6 +62,7 @@ genreList = pd.DataFrame(genreList)
 genreListDictionary = genreList.set_index('name')['mal_id'].to_dict()
 pp(genreListDictionary)
 
+#? Used for filtering data
 # filteredGenreList = genreList["name"] == "Shounen"
 # filteredGenreList = genreList[filteredGenreList]
 # print(filteredGenreList)
@@ -54,14 +71,10 @@ pp(genreListDictionary)
 # # pp(type(genreList))
 # pp(genreList[["mal_id","name"]])
 
-
-class animeSearch():
-    
-    def __init__(self):
-        self.apiUrl = "https://api.jikan.moe/v4/"
-
-    def getGenres(self):
-        url = self.apiUrl + ""
+genreWanted = input("WHAT YOU WANT\n")
+filterFunction = animeSearch()
+output = filterFunction.searchFunction(genreWanted)
+pp(output)
 
 
 #?Creates dataframe that contians dataset information
