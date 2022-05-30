@@ -35,7 +35,7 @@ class number2():
 
 #Default parameters
 name="Seyr"
-apiKey="de0be782-84ab-4df1-95b6-12ef88a2dd9f"
+apiKey=""
 uuid="8800f769efd84095abfc03eaad0d5291"
 
 ##Uses Mojang API to grab provided Minecraft account's UUID
