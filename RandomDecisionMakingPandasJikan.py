@@ -40,7 +40,7 @@ genreData = getGenre()
 genreList = genreData.getGenreList()
 genreList = pd.DataFrame(genreList)
 
-filteredGenreList = genreList["name"] == "Erotica"
+filteredGenreList = genreList["name"] == "Shounen"
 filteredGenreList = genreList[filteredGenreList]
 print(filteredGenreList)
 # ['data']
